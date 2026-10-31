@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "globallaw-guide": {
+      "command": "node",
+      "args": [
+        "mcp-server.mjs"
+      ]
+    }
+  }
+}

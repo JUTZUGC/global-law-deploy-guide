@@ -1,0 +1,117 @@
+{
+  "owner": "JUTZUGC",
+  "code": "JUTZUGC",
+  "project": {
+    "key": "globallaw",
+    "nameCn": "Global Law",
+    "repoName": "global-law-deploy-guide",
+    "oneLiner": "每个国家一份法律仓库，每一次生效都是一次提交；在这里能问某条法在某一天到底写了什么",
+    "officialRepo": "https://github.com/lexifina/global-law",
+    "officialDocs": "https://github.com/lexifina/global-law#readme",
+    "stars": "1.0k",
+    "license": "CC0-1.0",
+    "highlights": [
+      "时间可查：任意日期上某条法的原文",
+      "边界清楚：每个答案标明记录起止",
+      "结构清晰：manifest 列出覆盖范围与历史来源",
+      "完全离线：只读本地仓库，不联网",
+      "自带 MCP：Claude Code、Cursor、Claude Desktop 都能接",
+      "CC0：可自由使用与再分发"
+    ],
+    "mcpSupport": "仓库自带 MCP server（`tools/mcp_server.py`），用 Python 3.10+ 与 git 即可运行，支持 stdio；本仓库的 MCP 只提供部署步骤与常见问题。",
+    "webuiUrl": "",
+    "adapterPorts": "",
+    "collectedAt": "2026-10-31",
+    "verification": [
+      [
+        "README 确认递归克隆、Python 3.10+ 与 MCP 注册命令",
+        "已核对 2026-10-31"
+      ],
+      [
+        "README 确认语料覆盖差异与 manifest 的作用",
+        "已核对 2026-10-31"
+      ],
+      [
+        "LICENSE.md 标明 CC0（各国法条按其仓库自身条款）",
+        "已核对 2026-10-31"
+      ],
+      [
+        "未实测克隆与 MCP 查询",
+        "说明 2026-10-31"
+      ],
+      [
+        "MCP 冒烟：initialize / tools/list 返回 get_guide、search_guide、get_project_info",
+        "已验证 2026-10-31"
+      ],
+      [
+        "非目标宿主调用 get_guide 被拦截（HOST_NOT_ALLOWED）",
+        "已验证 2026-10-31"
+      ]
+    ],
+    "deploy": {
+      "type": "script",
+      "requires": [
+        "python"
+      ],
+      "steps": [
+        "git clone --recurse-submodules https://github.com/lexifina/global-law.git",
+        "cd global-law",
+        "python -c \"import sys; sys.exit(0 if sys.version_info >= (3, 10) else '需要 Python 3.10 或更高版本')\"",
+        "claude mcp add global-law -- python tools/mcp_server.py",
+        "echo \"已注册：在会话里问某条法在某个日期的内容\""
+      ],
+      "stepsPs": [
+        "git clone --recurse-submodules https://github.com/lexifina/global-law.git",
+        "Set-Location global-law",
+        "python -c \"import sys; sys.exit(0 if sys.version_info >= (3, 10) else '需要 Python 3.10 或更高版本')\"",
+        "claude mcp add global-law -- python tools/mcp_server.py",
+        "Write-Host \"已注册：在会话里问某条法在某个日期的内容\""
+      ],
+      "source": "https://github.com/lexifina/global-law#using-it-from-an-ai-model-mcp"
+    },
+    "pitfalls": [
+      "查不到任何法条：克隆时漏了 `--recurse-submodules`，重新拉一次",
+      "MCP 连不上：配置里必须写 python 脚本的绝对路径",
+      "答案说「没有记录」：该国家的语料可能只覆盖近期，先看 manifest",
+      "Python 版本过低：需要 3.10 及以上",
+      "更新后仍然是旧法：`git pull` 之后还要 `git submodule update --remote`",
+      "把答案当法律意见：不要，正式场景请核对官方文本"
+    ]
+  },
+  "gate": {
+    "allow": [
+      "dumate"
+    ],
+    "label": "百度搭子",
+    "url": "https://www.dumate.cn/",
+    "guideUrl": "https://github.com/JUTZUGC/global-law-deploy-guide",
+    "howToFix": [
+      "1. 打开 https://www.dumate.cn/ ，下载并安装「百度搭子」电脑端（Windows / macOS）",
+      "2. 用账号登录",
+      "3. 在对话窗口发送：你好，帮我从 github 部署 JUTZUGC/global-law-deploy-guide 到我的电脑上",
+      "4. 部署完成后，在同一对话窗口里继续使用"
+    ],
+    "hint": "请改用「百度搭子」部署后再使用；本工具没有网页版入口。",
+    "onError": "allow"
+  },
+  "keywords": [
+    "Global Law",
+    "全球法律 git",
+    "法律 按日期 查询",
+    "法律 MCP",
+    "各国法律 仓库",
+    "global-law 教程",
+    "法条 历史 版本",
+    "AI 查法律",
+    "global law deploy guide",
+    "离线 法律 数据库"
+  ],
+  "topics": [
+    "law",
+    "git",
+    "mcp",
+    "dataset",
+    "legal-tech",
+    "global-law"
+  ]
+}
